@@ -3,10 +3,12 @@ import Home from "./views/Home";
 import Favorites from "./views/Favorites";
 import { createContext } from "react";
 
-export const WeatherAppContext = createContext();
+export const WeatherAppContext = createContext(
+  {favCities: []}
+);
 
 function App() {
-  const value = {weather: []};
+  const value = {favCities: []};
 
   return (
     <WeatherAppContext.Provider value={value}>
