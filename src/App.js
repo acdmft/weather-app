@@ -3,20 +3,20 @@ import Home from "./views/Home";
 import Favorites from "./views/Favorites";
 import { createContext } from "react";
 
-export const WeatherContext = createContext();
+export const WeatherAppContext = createContext();
 
 function App() {
-  const value = {};
+  const value = {weather: []};
 
   return (
-    <WeatherContext.Provider value={value}>
+    <WeatherAppContext.Provider value={value}>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/favorites" component={Favorites} />
         </Switch>
       </BrowserRouter>
-    </WeatherContext.Provider>
+    </WeatherAppContext.Provider>
   );
 }
 
