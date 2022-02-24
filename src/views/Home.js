@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+// context
 import { WeatherAppContext } from "../App";
 
 export default function Home() {
@@ -48,8 +49,8 @@ export default function Home() {
 
   return (
     <>
-      <h1>Home</h1>
       <Navbar />
+      <h1>Home</h1>
       <form onSubmit={handleSubmit(handleCityInput)}>
         <label>Enter city:</label>
         <input
