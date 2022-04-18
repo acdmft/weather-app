@@ -4,27 +4,29 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CityCard from "../components/CityCard";
 //context
-import { WeatherAppContext } from "../App";
+import { FavoriteCitiesContext } from "../App";
+// fetch weather API
+import { fetchApi } from "../utils/fetchApi";
 
 export default function Favorites() {
-  const appContext = useContext(WeatherAppContext);
+  const appContext = useContext(FavoriteCitiesContext);
   
   useEffect(() => {
-    console.log(appContext.favCities);
+    console.log(appContext.favoriteCities);
   }, [appContext.length]);
 
   const removeFavorite = (cityId) => {
-    appContext.favCities.splice(cityId, 1);
-    console.log(appContext.favCities);
+    appContext.favoriteCities.splice(cityId, 1);
+    console.log(appContext.favoriteCities);
   };
 
   return (
     <>
       <Navbar />
       <h1>Favorites</h1>
-      {appContext.favCities.length > 0 ? (
+      {appContext.favoriteCities.length > 0 ? (
         <>
-          {appContext.favCities.map((city, i) => {
+          {appContext.favoriteCities.map((city, i) => {
             return ( <CityCard cityName={city} cityId={i} key={i} onClick={() => {removeFavorite(i)}} /> ) 
           })}
         </>

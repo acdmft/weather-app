@@ -1,50 +1,50 @@
 import { useState, useContext } from "react";
+import { useEffect } from "react";
+// views and components
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useEffect } from "react";
+import CityCard from "../components/CityCard";
+//react-hook-form
 import { useForm } from "react-hook-form";
 // context
-import { WeatherAppContext } from "../App";
+import { FavoriteCitiesContext } from "../App";
+// fetch weather API 
+import { fetchApi } from "../utils/fetchApi";
 
 export default function Home() {
   const [weather, setWeather] = useState([]);
-  const [currentCity, setCity] = useState("paris");
+  const [currentCity, setCurrentCity] = useState(JSON.parse(localStorage.getItem("favoriteCities")) || "paris");
   const {
     register,
     getValues,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const weatherAppContext = useContext(WeatherAppContext);
+  const appContext = useContext(FavoriteCitiesContext);
 
-  // get the current weather of the city recieved from the state
+  // get the weather of the city from the favorite cities or default city (Paris)
   useEffect(() => {
-    console.log(currentCity);
-    console.log(weatherAppContext.favCities);
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${currentCity},fr&appid=0385b2073dd106cd2ae5019621c6b1ba`
-    )
-      .then((res) => res.json())
+    fetchApi(currentCity)
       .then((res) => {
         setWeather(res.list[0].main.temp);
         console.log(res.list[0].main.temp);
       })
       .catch((error) => console.log("Something went wrong during fetching the city"));
-  }, [currentCity]);
+  }, []);
 
   const handleCityInput = () => {
     let city = getValues("city").toLowerCase();
-    setCity(city);
+    setCurrentCity(city);
   };
   //allows to add only 3 cities to WeatherAppContext
   const addCityToFavorite = () => {
     if (
-      !weatherAppContext.favCities.includes(currentCity) &&
-      weatherAppContext.favCities.length < 3
+      !appContext.favoriteCities.includes(currentCity) &&
+      appContext.favoriteCities.length < 3
     ) {
-      weatherAppContext.favCities.push(currentCity);
+      appContext.setFavoriteCities(currentCity);
     }
-    console.log("addCitytoFav", weatherAppContext.favCities);
+    console.log("addCitytoFav", appContext.favoriteCities);
   };
 
   return (
@@ -71,6 +71,7 @@ export default function Home() {
         <p>getting city...</p>
       )}
       {weather.length !== 0 ? <p>temperature: {weather}</p> : <p>Loading...</p>}
+      <CityCard weather={weather} />
       <Footer />
     </>
   );

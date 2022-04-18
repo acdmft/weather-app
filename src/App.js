@@ -1,24 +1,24 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Favorites from "./views/Favorites";
-import { createContext } from "react";
+import { useState, createContext } from "react";
 
-export const WeatherAppContext = createContext(
-  {favCities: []}
+export const FavoriteCitiesContext = createContext(
 );
 
 function App() {
-  const value = {favCities: []};
+  // get favoriteCities from local storage or set to empty array
+  const [favoriteCities, setFavoriteCities] = useState(JSON.parse(localStorage.getItem("favoriteCities")) || []);
 
   return (
-    <WeatherAppContext.Provider value={value}>
+    <FavoriteCitiesContext.Provider value={{favoriteCities, setFavoriteCities}}>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/favorites" component={Favorites} />
         </Switch>
       </BrowserRouter>
-    </WeatherAppContext.Provider>
+    </ FavoriteCitiesContext.Provider>
   );
 }
 
