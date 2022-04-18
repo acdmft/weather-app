@@ -12,27 +12,32 @@ import { FavoriteCitiesContext } from "../App";
 import { fetchApi } from "../utils/fetchApi";
 
 export default function Home() {
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState(null);
   const [currentCity, setCurrentCity] = useState(JSON.parse(localStorage.getItem("favoriteCities")) || "paris");
+  // react-hooks-form
   const {
     register,
     getValues,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  // context (favorite cities, 3 max)
   const appContext = useContext(FavoriteCitiesContext);
 
   // get the weather of the city from the favorite cities or default city (Paris)
   useEffect(() => {
+    console.log(currentCity)
     fetchApi(currentCity)
       .then((res) => {
-        setWeather(res.list[0].main.temp);
-        console.log(res.list[0].main.temp);
+        setWeather(res)
+        // setWeather(res.main.weather);
+        // console.log(res.list[0].main.temp);
+        console.log(res)
       })
       .catch((error) => console.log("Something went wrong during fetching the city"));
-  }, []);
+  }, [currentCity]);
 
-  const handleCityInput = () => {
+  const setCity = () => {
     let city = getValues("city").toLowerCase();
     setCurrentCity(city);
   };
@@ -42,7 +47,9 @@ export default function Home() {
       !appContext.favoriteCities.includes(currentCity) &&
       appContext.favoriteCities.length < 3
     ) {
-      appContext.setFavoriteCities(currentCity);
+      const favoriteCitiesCopy = [...appContext.favoriteCities, currentCity];
+      appContext.setFavoriteCities(favoriteCitiesCopy);
+      localStorage.setItem("favoriteCities", JSON.stringify(favoriteCitiesCopy));
     }
     console.log("addCitytoFav", appContext.favoriteCities);
   };
@@ -51,7 +58,7 @@ export default function Home() {
     <>
       <Navbar />
       <h1>Home</h1>
-      <form onSubmit={handleSubmit(handleCityInput)}>
+      <form onSubmit={handleSubmit(setCity)}>
         <label>Enter city:</label>
         <input
           type="text"
@@ -62,16 +69,7 @@ export default function Home() {
         {errors.city && <span>Please enter a city name</span>}
         <button>Search</button>
       </form>
-      {currentCity !== "" ? (
-        <>
-          <p>{currentCity}</p>
-          <button onClick={addCityToFavorite}>Add to favorite</button>
-        </>
-      ) : (
-        <p>getting city...</p>
-      )}
-      {weather.length !== 0 ? <p>temperature: {weather}</p> : <p>Loading...</p>}
-      <CityCard weather={weather} />
+      {weather ? <CityCard weather={weather} onClick={addCityToFavorite} children={"Add to favorite"} /> : <p>loading ... </p>}
       <Footer />
     </>
   );
