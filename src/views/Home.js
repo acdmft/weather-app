@@ -13,7 +13,7 @@ import { fetchApi } from "../utils/fetchApi";
 
 export default function Home() {
   const [weather, setWeather] = useState(null);
-  const [currentCity, setCurrentCity] = useState(JSON.parse(localStorage.getItem("favoriteCities")) || "paris");
+  const [currentCity, setCurrentCity] = useState(JSON.parse(localStorage.getItem("favoriteCities"))[0] || "paris");
   // react-hooks-form
   const {
     register,
