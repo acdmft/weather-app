@@ -14,6 +14,7 @@ import { fetchApi } from "../utils/fetchApi";
 export default function Home() {
   const [weather, setWeather] = useState(null);
   const [currentCity, setCurrentCity] = useState(JSON.parse(localStorage.getItem("favoriteCities"))[0] || "paris");
+  const [background, setBackground] = useState("snow")
   // react-hooks-form
   const {
     register,
@@ -23,16 +24,53 @@ export default function Home() {
   } = useForm();
   // context (favorite cities, 3 max)
   const appContext = useContext(FavoriteCitiesContext);
+  // set current weather background 
+  const getWeatherBackground = (weather) => {
+    switch (weather.main) {
+      case "Thunderstorm":
+      case "Tornado":
+      case "Squall":
+        setBackground("storm");
+        break;
+      case "Drizzle":
+        setBackground("drizzle");
+        break;
+      case "Rain":
+        setBackground("rain");
+        break;
+      case "Snow":
+        setBackground("snow");
+        break;
+      case "Clear":
+        setBackground("sun");
+        break;
+      case "Clouds":
+        setBackground("clouds");
+        break; 
+      case "Mist":
+      case "Haze":
+      case "Fog":
+      case "Smoke":
+        setBackground("mist");
+        break;
+      case "Dust":
+      case "Sand":
+      case "Ash":
+        setBackground("dust");
+        break;
+    }
+  }
 
   // get the weather of the city from the favorite cities or default city (Paris)
   useEffect(() => {
     console.log(currentCity)
     fetchApi(currentCity)
       .then((res) => {
-        setWeather(res)
+        setWeather(res);
+        getWeatherBackground(res);
         // setWeather(res.main.weather);
         // console.log(res.list[0].main.temp);
-        console.log(res)
+        console.log(res.weather[0].main)
       })
       .catch((error) => console.log("Something went wrong during fetching the city"));
   }, [currentCity]);
@@ -55,7 +93,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div className={`container mx-auto px-5 min-h-fit flex flex-col justify-around background-${background}`}>
       <Navbar />
       <h1>Home</h1>
       <form onSubmit={handleSubmit(setCity)}>
@@ -71,6 +109,6 @@ export default function Home() {
       </form>
       {weather ? <CityCard weather={weather} onClick={addCityToFavorite} children={"Add to favorite"} /> : <p>loading ... </p>}
       <Footer />
-    </>
+    </div>
   );
 }

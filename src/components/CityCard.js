@@ -10,7 +10,7 @@ export default function CityCard({weather, onClick, children}) {
       {/* city name */}
       <h3>{weather.name}</h3>
       {/* weather type */}
-      <p>description: {weather.weather[0].main}</p>
+      <p>description: {weather.weather[0].description}</p>
       <p>temperature: {weather.main.temp} °C</p>
       <p>humidity: {weather.main.humidity}</p>
       <p>wind: {weather.wind.speed}</p>
