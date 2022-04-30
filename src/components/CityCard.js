@@ -6,7 +6,8 @@ import { FavoriteCitiesContext } from "../App";
 
 export default function CityCard({weather, onClick, children}) {
   return (
-    <>
+    <div className="flex flex-col w-96 cityCard">
+      <div className="z-10" >
       {/* city name */}
       <h3>{weather.name}</h3>
       {/* weather type */}
@@ -19,6 +20,8 @@ export default function CityCard({weather, onClick, children}) {
       >
         {children}
       </button>
-    </>
+
+      </div>
+    </div>
   );
 }

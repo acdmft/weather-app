@@ -12,10 +12,9 @@ import { fetchApi } from "../utils/fetchApi";
 
 export default function Home() {
   const [weather, setWeather] = useState(null);
-  const favoriteCities = JSON.parse(localStorage.getItem("favoriteCities")) || [];
-  const [currentCity, setCurrentCity] = useState(favoriteCities[0] ||
-    "paris"
-  );
+  const favoriteCities =
+    JSON.parse(localStorage.getItem("favoriteCities")) || [];
+  const [currentCity, setCurrentCity] = useState(favoriteCities[0] || "paris");
   const [background, setBackground] = useState("");
   console.log(background);
   // react-hooks-form
@@ -29,7 +28,7 @@ export default function Home() {
   const appContext = useContext(FavoriteCitiesContext);
   // set current weather background
   const getWeatherBackground = (weather) => {
-    console.log('weather.main', weather.main);
+    console.log("weather.main", weather.main);
     switch (weather.main) {
       case "Thunderstorm":
       case "Tornado":
@@ -102,32 +101,55 @@ export default function Home() {
   };
 
   return (
-   
     <div
       className={`container p-0 mx-auto flex flex-col       
        justify-around background-${background}`}
     >
-      <h1>Home</h1>
-      <form onSubmit={handleSubmit(setCity)}>
-        <label>Enter city:</label>
+      <form
+        onSubmit={handleSubmit(setCity)}
+        className="w-screen sm:w-1/4 md:w-1/2 mx-auto mt-16"
+      >
+        <div className="mt-1 relative rounded-md shadow-sm w-5/6 sm:w-1/2 mx-auto">
+
         <input
           type="text"
           {...register("city", { required: true })}
           name="city"
           placeholder="city"
+          className="
+							form-control
+							block
+							w-full
+							px-3 py-1.5
+							text-base font-normal text-gray-700
+							bg-white bg-clip-padding
+							border border-solid border-gray-300
+							rounded-md shadow-sm
+							transition
+							ease-in-out
+							m-0
+							focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+						"
         />
         {errors.city && <span>Please enter a city name</span>}
-        <button>Search</button>
+        </div>
+        <div className="flex flex-row justify-around pt-5">
+          <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Search
+          </button>
+        </div>
       </form>
-      {weather ? (
-        <CityCard
-          weather={weather}
-          onClick={addCityToFavorite}
-          children={"Add to favorite"}
-        />
-      ) : (
-        <p>loading ... </p>
-      )}
+      <div className="flex flex-row justify-around m-4">
+        {weather ? (
+          <CityCard
+            weather={weather}
+            onClick={addCityToFavorite}
+            children={"Add to favorite"}
+          />
+        ) : (
+          <p>loading ... </p>
+        )}
+      </div>
       <Footer />
     </div>
   );

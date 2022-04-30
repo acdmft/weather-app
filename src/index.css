@@ -19,7 +19,7 @@ body,
 .background-dust {
   background-image: url(images/clouds.jpg);
   background-size: cover;
-  height: 100vh;
+  height: 100%;
 }
 .background-drizzle {
   background-image: url(images/drizzle.jpg);
@@ -41,4 +41,7 @@ body,
 }
 .background-dust {
   background-image: url(images/dust.jpg);
+}
+.cityCard {
+  background-color: rgba(54, 54, 54, 0.3);
 }
