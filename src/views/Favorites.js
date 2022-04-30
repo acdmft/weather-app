@@ -44,7 +44,6 @@ export default function Favorites() {
 
   if (isLoading) {
 		return <>
-    <Navbar />
     <h3>Loading ...</h3>
     <Footer />
     </>

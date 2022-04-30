@@ -2,35 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-.background-clouds {
+body,
+#root {
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.background-clouds,
+.background-drizzle,
+.background-mist,
+.background-rain,
+.background-snow,
+.background-storm,
+.background-sun,
+.background-dust {
   background-image: url(images/clouds.jpg);
+  background-size: cover;
   height: 100vh;
 }
 .background-drizzle {
   background-image: url(images/drizzle.jpg);
-  height: 100vh;
 }
 .background-mist {
   background-image: url(images/mist.jpg);
-  height: 100vh;
 }
 .background-rain {
   background-image: url(images/rain.jpg);
-  height: 100vh;
 }
 .background-snow {
   background-image: url(images/snow.jpg);
-  height: 100vh;
 }
 .background-storm {
   background-image: url(images/storm.jpg);
-  height: 100vh;
 }
 .background-sun {
   background-image: url(images/sun.jpg);
-  height: 100vh;
 }
 .background-dust {
   background-image: url(images/dust.jpg);
-  height: 100vh;
 }

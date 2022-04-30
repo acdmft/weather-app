@@ -1,20 +1,23 @@
 import { useState, useContext } from "react";
 import { useEffect } from "react";
 // views and components
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CityCard from "../components/CityCard";
 //react-hook-form
 import { useForm } from "react-hook-form";
 // context
 import { FavoriteCitiesContext } from "../App";
-// fetch weather API 
+// fetch weather API
 import { fetchApi } from "../utils/fetchApi";
 
 export default function Home() {
   const [weather, setWeather] = useState(null);
-  const [currentCity, setCurrentCity] = useState(JSON.parse(localStorage.getItem("favoriteCities"))[0] || "paris");
-  const [background, setBackground] = useState("snow")
+  const favoriteCities = JSON.parse(localStorage.getItem("favoriteCities")) || [];
+  const [currentCity, setCurrentCity] = useState(favoriteCities[0] ||
+    "paris"
+  );
+  const [background, setBackground] = useState("");
+  console.log(background);
   // react-hooks-form
   const {
     register,
@@ -24,8 +27,9 @@ export default function Home() {
   } = useForm();
   // context (favorite cities, 3 max)
   const appContext = useContext(FavoriteCitiesContext);
-  // set current weather background 
+  // set current weather background
   const getWeatherBackground = (weather) => {
+    console.log('weather.main', weather.main);
     switch (weather.main) {
       case "Thunderstorm":
       case "Tornado":
@@ -46,7 +50,7 @@ export default function Home() {
         break;
       case "Clouds":
         setBackground("clouds");
-        break; 
+        break;
       case "Mist":
       case "Haze":
       case "Fog":
@@ -59,20 +63,22 @@ export default function Home() {
         setBackground("dust");
         break;
     }
-  }
+  };
 
   // get the weather of the city from the favorite cities or default city (Paris)
   useEffect(() => {
-    console.log(currentCity)
+    console.log(currentCity);
     fetchApi(currentCity)
       .then((res) => {
         setWeather(res);
-        getWeatherBackground(res);
+        getWeatherBackground(res.weather[0]);
         // setWeather(res.main.weather);
         // console.log(res.list[0].main.temp);
-        console.log(res.weather[0].main)
+        console.log(res.weather[0].main);
       })
-      .catch((error) => console.log("Something went wrong during fetching the city"));
+      .catch((error) =>
+        console.log("Something went wrong during fetching the city")
+      );
   }, [currentCity]);
 
   const setCity = () => {
@@ -87,14 +93,20 @@ export default function Home() {
     ) {
       const favoriteCitiesCopy = [...appContext.favoriteCities, currentCity];
       appContext.setFavoriteCities(favoriteCitiesCopy);
-      localStorage.setItem("favoriteCities", JSON.stringify(favoriteCitiesCopy));
+      localStorage.setItem(
+        "favoriteCities",
+        JSON.stringify(favoriteCitiesCopy)
+      );
     }
     console.log("addCitytoFav", appContext.favoriteCities);
   };
 
   return (
-    <div className={`container mx-auto px-5 min-h-fit flex flex-col justify-around background-${background}`}>
-      <Navbar />
+   
+    <div
+      className={`container p-0 mx-auto flex flex-col       
+       justify-around background-${background}`}
+    >
       <h1>Home</h1>
       <form onSubmit={handleSubmit(setCity)}>
         <label>Enter city:</label>
@@ -107,7 +119,15 @@ export default function Home() {
         {errors.city && <span>Please enter a city name</span>}
         <button>Search</button>
       </form>
-      {weather ? <CityCard weather={weather} onClick={addCityToFavorite} children={"Add to favorite"} /> : <p>loading ... </p>}
+      {weather ? (
+        <CityCard
+          weather={weather}
+          onClick={addCityToFavorite}
+          children={"Add to favorite"}
+        />
+      ) : (
+        <p>loading ... </p>
+      )}
       <Footer />
     </div>
   );
