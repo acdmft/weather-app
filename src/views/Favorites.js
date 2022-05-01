@@ -51,8 +51,6 @@ export default function Favorites() {
 
   return (
     <>
-      <Navbar />
-      <h1>Favorites</h1>
 
       {appContext.favoriteCities.length > 0 ? (
         <>
