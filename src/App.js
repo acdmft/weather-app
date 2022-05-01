@@ -6,7 +6,9 @@ import Favorites from "./views/Favorites";
 import Footer from "./components/Footer";
 // context
 import { useState, createContext } from "react";
-
+// REACT-TOASTIFY
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const FavoriteCitiesContext = createContext(
 );
@@ -25,6 +27,7 @@ function App() {
         </Switch>
         <Footer />
       </BrowserRouter>
+      <ToastContainer />
     </ FavoriteCitiesContext.Provider>
   );
 }

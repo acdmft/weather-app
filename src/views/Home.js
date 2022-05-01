@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { FavoriteCitiesContext } from "../App";
 // fetch weather API
 import { fetchApi } from "../utils/fetchApi";
+// toastify 
+import { toast } from "react-toastify";
 
 export default function Home() {
   const [weather, setWeather] = useState(null);
@@ -69,11 +71,12 @@ export default function Home() {
     console.log(currentCity);
     fetchApi(currentCity)
       .then((res) => {
+        if (res.cod !== 200) {
+          toast.error("No result for this city");
+          return; 
+        }
         setWeather(res);
         getWeatherBackground(res.weather[0]);
-        // setWeather(res.main.weather);
-        // console.log(res.list[0].main.temp);
-        console.log(res.weather[0].main);
       })
       .catch((error) =>
         console.log("Something went wrong during fetching the city")
@@ -90,6 +93,7 @@ export default function Home() {
       !appContext.favoriteCities.includes(currentCity) &&
       appContext.favoriteCities.length < 3
     ) {
+      toast.success(`${currentCity} is added to favorites`);
       const favoriteCitiesCopy = [...appContext.favoriteCities, currentCity];
       appContext.setFavoriteCities(favoriteCitiesCopy);
       localStorage.setItem(
@@ -97,7 +101,6 @@ export default function Home() {
         JSON.stringify(favoriteCitiesCopy)
       );
     }
-    console.log("addCitytoFav", appContext.favoriteCities);
   };
 
   return (
