@@ -1,6 +1,6 @@
 <div align="center">
-  <h1 align="center">Memory-game</h1>
-<h2 align="center">https://acdmf-memo-game.netlify.app/</h2>
+  <h1 align="center">React Weather App</h1>
+<h2 align="center">https://acdmft-weather-app.netlify.app/</h2>
 </div>
 
 ## About the project 
@@ -30,7 +30,7 @@ To run this project you need Node.js and npm to be installed on your computer (y
 
 1. Clone repository on your local machine 
 ```sh
-   git clone https://github.com/acdmft/memory-game
+   git clone https://github.com/acdmft/weather-app.git
    ```
 2. Install dependencies 
 ```sh
