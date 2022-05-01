@@ -66,7 +66,6 @@ export default function Favorites() {
         <Link to="/">Go back</Link> 
       </button>
 
-      <Footer />
     </>
   );
 }

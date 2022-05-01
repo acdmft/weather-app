@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./views/Home";
 import Favorites from "./views/Favorites";
+import Footer from "./components/Footer";
 // context
 import { useState, createContext } from "react";
 
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/favorites" component={Favorites} />
         </Switch>
+        <Footer />
       </BrowserRouter>
     </ FavoriteCitiesContext.Provider>
   );
