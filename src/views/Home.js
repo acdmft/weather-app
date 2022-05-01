@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useEffect } from "react";
 // views and components
-import Footer from "../components/Footer";
+import InfoBar from "../components/InfoBar";
 import CityCard from "../components/CityCard";
 //react-hook-form
 import { useForm } from "react-hook-form";
@@ -105,6 +105,7 @@ export default function Home() {
       className={`container p-0 mx-auto flex flex-col       
        justify-around background-${background}`}
     >
+      <InfoBar />
       <form
         onSubmit={handleSubmit(setCity)}
         className="w-screen sm:w-1/4 md:w-1/2 mx-auto mt-16"

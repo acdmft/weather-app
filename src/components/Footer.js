@@ -1,5 +1,4 @@
 export default function Footer() {
-  const year = new Date().getFullYear();
   return (
     <footer className="text-center text-white bg-gray-800">
 			<div className="flex justify-center py-5">

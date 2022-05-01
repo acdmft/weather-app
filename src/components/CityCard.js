@@ -6,7 +6,7 @@ import { FavoriteCitiesContext } from "../App";
 
 export default function CityCard({weather, onClick, children}) {
   return (
-    <div className="flex flex-col w-96 cityCard border border-hidden rounded-md transition ease-in-out delay-200 hover:-translate-y-1 hover:scale-105 duration-300">
+    <div className="flex flex-col w-5/6 md:w-96 my-4 cityCard border border-hidden rounded-md transition ease-in-out delay-200 hover:-translate-y-1 hover:scale-105 duration-300">
       <div className="z-10 pt-8 text-gray-100 font-bold md:leading-10" >
       {/* city name */}
       <h2 className="text-center text-xl mb-4">{weather.name}</h2>
