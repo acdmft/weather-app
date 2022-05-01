@@ -51,9 +51,7 @@ export default function Favorites() {
     eveningTheme,
     eveningTheme,
   ];
-  const theme = themes[time];
-  console.log(themes[time]);
-  
+  const theme = themes[time];  
 
   useEffect(() => {
     if (appContext.favoriteCities.length !== 0) {
