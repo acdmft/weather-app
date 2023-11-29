@@ -105,7 +105,7 @@ export default function Home() {
 
   return (
     <div
-      className={`container p-0 mx-auto flex flex-col       
+      className={`p-2 md:p-4 mx-auto flex flex-col      
        justify-around background-${background}`}
     >
       <InfoBar />
