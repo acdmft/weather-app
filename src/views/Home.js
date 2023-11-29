@@ -73,7 +73,7 @@ export default function Home() {
       .then((res) => {
         if (res.cod !== 200) {
           toast.error("No result for this city");
-          return; 
+          return;
         }
         setWeather(res);
         getWeatherBackground(res.weather[0]);
@@ -105,22 +105,25 @@ export default function Home() {
 
   return (
     <div
-      className={`p-2 md:p-4 mx-auto flex flex-col      
-       justify-around background-${background}`}
+      className={`p-2 md:p-4 mx-auto flex flex-col max-h-[90vh]   
+      background-${background}`}
     >
-      <InfoBar />
+      <div className="self-start w-full">
+
+        <InfoBar />
+      </div>
       <form
         onSubmit={handleSubmit(setCity)}
-        className="w-screen sm:w-1/4 md:w-1/2 mx-auto mt-16"
+        className="w-screen sm:w-1/4 md:w-1/2 mx-auto mt-8"
       >
         <div className="mt-1 relative rounded-md shadow-sm w-5/6 sm:w-1/2 mx-auto">
 
-        <input
-          type="text"
-          {...register("city", { required: true })}
-          name="city"
-          placeholder="city"
-          className="
+          <input
+            type="text"
+            {...register("city", { required: true })}
+            name="city"
+            placeholder="city"
+            className="
 							form-control
 							block
 							w-full
@@ -134,8 +137,8 @@ export default function Home() {
 							m-0
 							focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
 						"
-        />
-        {errors.city && <span>Please enter a city name</span>}
+          />
+          {errors.city && <span>Please enter a city name</span>}
         </div>
         <div className="flex flex-row justify-around pt-5">
           <button className="btn-primary">
@@ -143,18 +146,21 @@ export default function Home() {
           </button>
         </div>
       </form>
-      <div className="flex flex-row justify-around m-4">
+     
+
+      <div className="flex flex-row justify-around mt-8">
         {weather ? (
-          <CityCard
-            weather={weather}
-            onClick={addCityToFavorite}
-            children={"Add to favorite"}
-          />
+            <CityCard
+              weather={weather}
+              onClick={addCityToFavorite}
+              children={"Add to favorite"}
+            />
         ) : (
           <p>loading ... </p>
         )}
       </div>
-     
-    </div>
+      </div>
+
+    
   );
 }

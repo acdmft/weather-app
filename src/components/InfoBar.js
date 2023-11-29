@@ -56,7 +56,7 @@ export default function InfoBar() {
   }, []);
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-between w-full">
       <p className="w-1/3 px-4 mt-4 text-orange-300 font-bold md:leading-8">
         {dayStr} {date} {month}
       </p>
